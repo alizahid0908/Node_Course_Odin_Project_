@@ -1,3 +1,9 @@
 <li>
     <%= user %>
+
+    <form action="/create" method="POST">
+        <label for="fullName">Full Name:</label>
+        <input placeholder="John Doe" type="text" name="fullName" id="fullName">
+        <button type="submit">Submit</button>
+      </form>      
 </li>
