@@ -11,6 +11,14 @@ const validateUser = [
   body("lastName").trim()
     .isAlpha().withMessage(`Last name ${alphaErr}`)
     .isLength({ min: 1, max: 10 }).withMessage(`Last name ${lengthErr}`),
+  body("email").trim()
+    .isEmail().withMessage("Email must be a valid email address.")
+    .notEmpty().withMessage("Email must not be empty."),
+  body("age")
+  .customSanitizer(value => (value === "" ? null : value))
+  .isInt({ min: 0 }).withMessage("Age must be a positive integer."),
+  body("biography").optional()
+      .isLength({ min: 1, max: 100 }).withMessage("Biography must be between 1 and 100 characters."),
 ];
 
 const usersListGet = (req, res) => {
@@ -78,6 +86,25 @@ const usersDeletePost = (req, res) => {
   res.redirect("/");
 }
 
+const usersSearchGet = (req, res) => {
+  const query = req.query.query ? req.query.query.toLowerCase() : null;
+  let results = [];
+  
+  if (query) {
+    results = usersStorage.getUsers().filter(user => 
+      user.firstName.toLowerCase().includes(query) || 
+      user.lastName.toLowerCase().includes(query) || 
+      user.email.toLowerCase().includes(query)
+    );
+  }
+
+  res.render("search", {
+    title: "Search Results",
+    results,
+    message: query ? null : "Please provide a search query.",
+  });
+};
+
 const userController = {
   usersListGet,
   usersCreateGet,
@@ -85,6 +112,7 @@ const userController = {
   usersUpdateGet,
   usersUpdatePost,
   usersDeletePost,
+  usersSearchGet,
 };
 
 export default userController;
