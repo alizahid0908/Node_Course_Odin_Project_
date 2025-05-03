@@ -5,21 +5,24 @@
 </head>
 <body>
   <h1><%= title %></h1>
+
+  <!-- Search Form -->
+  <form action="/" method="GET">
+    <input type="text" name="search" placeholder="Search usernames" value="<%= typeof search !== 'undefined' ? search : '' %>">
+    <button type="submit">Search</button>
+  </form>
+
   <ul>
-    <% if (locals.users) {%>
+    <% if (users && users.length > 0) { %>
       <% users.forEach(user => { %>
-        <li>
-          ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %>, 
-          Email: <%= user.email %>, Age: <%= user.age || "N/A" %>, Bio: <%= user.bio || "N/A" %>
-          <a href="/<%= user.id %>/update">Update</a>
-          <form action="/<%= user.id %>/delete" method="POST" style="display:inline;">
-            <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
-          </form>
-        </li>
+        <li><%= user.username %></li>
       <% }); %>
+    <% } else { %>
+      <li>No usernames found.</li>
     <% } %>
   </ul>
-  <a href="/create">Create a user</a>
-  <%- include("searchForm") %>
+  <a href="/new">Create a new username</a>
+  <br>
+  <a href="/delete" style="color: red;">Delete all usernames</a>
 </body>
 </html>
