@@ -5,18 +5,19 @@
   <title>Home</title>
 </head>
 <body>
-  <h1>hello world!</h1>
-  <h2>Welcome to the home page</h2>
-  <p>Login</p>
-  <form action="/users/login" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Login</button>
-  </form>
+  <% if (locals.user) {%>
+    <h1>WELCOME BACK <%= user.username %></h1>
+    <a href="/users/logout">LOG OUT</a>
+  <% } else { %>
+    <h1>please log in</h1>
+    <form action="/users/login" method="POST">
+      <label for="username">Username</label>
+      <input id="username" name="username" placeholder="username" type="text" />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" />
+      <button type="submit">Log In</button>
+    </form>
+  <%}%>
   <p>Click the link below to sign up</p>
   <a href="/users/sign-up">Sign Up</a>
 </body>
