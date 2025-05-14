@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title><%= title %></title>
+  <meta charset="UTF-8">
+  <title>Home</title>
 </head>
 <body>
-  <h1><%= title %></h1>
-
-  <!-- Search Form -->
-  <form action="/" method="GET">
-    <input type="text" name="search" placeholder="Search usernames" value="<%= typeof search !== 'undefined' ? search : '' %>">
-    <button type="submit">Search</button>
+  <h1>hello world!</h1>
+  <h2>Welcome to the home page</h2>
+  <p>Login</p>
+  <form action="/users/login" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
   </form>
-
-  <ul>
-    <% if (users && users.length > 0) { %>
-      <% users.forEach(user => { %>
-        <li><%= user.username %></li>
-      <% }); %>
-    <% } else { %>
-      <li>No usernames found.</li>
-    <% } %>
-  </ul>
-  <a href="/new">Create a new username</a>
-  <br>
-  <a href="/delete" style="color: red;">Delete all usernames</a>
+  <p>Click the link below to sign up</p>
+  <a href="/users/sign-up">Sign Up</a>
 </body>
 </html>
+
